@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>get weather</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="media.css">
+</head>
+<body>
+
+    <!-- nav -->
+
+    <nav>
+        <div class="container nav flex">
+            <!-- ;eft side of the nav , a logo of website -->
+            <div class="left flex"  id="title-logo">
+                <img class="nav-img" src="/assets/png-transparent-weather-forecasting-severe-weather-storm-weather-free-text-heart-logo-thumbnail-removebg-preview.png" alt="">
+                <h1 class="title">get Weather</h1>
+            </div>
+            <!-- right part of the nav where I created a dropdown menu , In dropdown menu main cities
+                 of INDIA were mentioned by clicking of which we can retrieve the weather of 
+                that city  -->
+
+            <div class="right">
+                <select name="locations" id="locations" onfocus="this.size=3;" onblur='this.size=1;' onchange="this.size=1; this.blur(); fetchWeatherOfSelectOptions()">
+                    <option value="New Delhi" selected>New Delhi</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Kolkata">Kolkata</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Ziro">Ziro</option>
+                    <option value="Itanagar">Itanagar</option>
+                    <option value="Amaravati">Amaravati</option>
+                    <option value="Nizamabad">Nizamabad</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Patna">Patna</option>
+                    <option value="Bilaspur">Bilaspur</option>
+                    <option value="Raipur">Raipur</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gandhinagar">Gandhinagar</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Shimla">Shimla</option>
+                    <option value="Ranchi">Ranchi</option>
+                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                    <option value="Bhopal">Bhopal</option>
+                    <option value="Indore">Indore</option>
+                    <option value="Imphal">Imphal</option>
+                    <option value="Shillong">Shillong</option>
+                    <option value="Aizawl">Aizawl</option>
+                    <option value="Kohima">Kohima</option>
+                    <option value="Bhubaneswar">Bhubaneswar</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Jaipur">Jaipur</option>
+                    <option value="Gangtok">Gangtok</option>
+                    <option value="Agartala">Agartala</option>
+                    <option value="Dehradun">Dehradun</option>
+                    <option value="Lucknow">Lucknow</option>
+                    <option value="Leh">Leh</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- input-container as header , by using of which use can type the city or location
+         of which he want to get the weather-->
+
+    <header>
+        <div class="container input-box flex">
+            <h2 class="search-heading">know Weather by searching your location</h2>
+            <div class="flex input-field">
+                <form action="#" onsubmit="searchWeather()" class="input">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Enter city state or country name e.g, delhi " id="searchInput">
+                </form>
+                <button class="search-btn" onclick="searchWeather()">GO</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- main section -->
+
+    <main>
+        <section>
+            <!-- weather container , where all feteched data will be shown-->
+            <div class="container weather-section" id="weather-container">
+   
+            </div>
+        </section>
+    </main>
+
+    <!-- template using for the weather container -->
+
+    <template id="template">
+        <!-- temperature details -->
+        <div class="today-temperature weather">
+            <div class="temperature-heading flex">
+                <p class="today-heading">
+                    Todays's Weather
+                </p>
+                <p class="time">10:50</p>
+            </div>
+            <div class="line"></div>
+            <div class="temperature flex">
+                <div class="icon-temp flex"   style="margin-top: 8px;">
+                    <div class="imageAndTemp flex">
+                        <img src="https://placehold.jp/150x150.png" alt="" id="icon">
+                        <div class="celcius">
+                          <h1 class="celciusTemp" ><span id="tempInCelciusMainDiv">45.7</span><i class="fa-solid fa-genderless degree-1"></i></i><span style="font-size: 1.5rem;">C</span></h1>
+                          <div class="flex">
+                             <div>Real feel:</div> 
+                             <div class="real-feel"><span id="realFeelTemp"> 35.6</span><i class="fa-solid fa-genderless degree-2"></i> C</div>
+                          </div>
+                        </div> 
+                    </div>
+                    
+
+                    <div class="temp">
+                        <div class="flex poppins-light subcategory">
+                            <div>condition</div>
+                            <p class="condition" id="condition">mist</p>
+                        </div>
+                        <hr>
+                        <div class="flex poppins-light subcategory">
+                            <div>temp. in celcius</div>
+                            <p class="condition" id="tempInCelciusSideDive">89</p>
+                        </div>
+                        <hr>
+                        <div class="flex poppins-light subcategory">
+                            <div>temp in fahrenheit</div>
+                            <p class="condition" id="tempInF">89</p>
+                        </div>
+                        <hr>
+                        <div class="flex poppins-light subcategory">
+                            <div>Humidity</div>
+                            <p class="condition" id="humidity">33</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- wind details -->
+
+        <div class="wind weather row-2">
+            <div class="temperature-heading wind-heading ">
+                <p class="today-heading">
+                    Wind quality
+                </p>
+            </div>
+            <div class="line"></div>
+            <div class="flex poppins-light subcategory-3"  style="margin-top: 8px;">
+                <div>Wind Velocity</div>
+                <p class="condition"><span id="windVelocity">33</span><span> km/h</span></p>
+            </div>
+            <hr>
+            <div class="flex poppins-light subcategory-3">
+                <div class="flex" style="flex-direction: column;">
+                    <div>Wind Velocity</div>
+                    <div style="font-size: 14px;">(in miles/h)</div>
+                </div>
+                <p class="condition"><span id="windVelocityM/H">33</span><span> m/h</span></p>
+            </div>
+            <hr>
+            <div class="flex poppins-light subcategory-3">
+                <div>Wind Direction</div>
+                <p class="condition" id="windDirection">ESE</p>
+            </div>
+            <hr>
+            <div class="flex poppins-light subcategory-3">
+                <div class="flex" style="flex-direction: column;">
+                    <div>Wind Direction</div>
+                    <div style="font-size: 14px;">(in deg)</div>
+                </div>
+                <p class="condition" id="windDirectionInDeg">100</p>
+            </div>
+            <hr>
+            <div class="flex poppins-light subcategory-3">
+                <div>Wind Gust</div>
+                <p class="condition"><span id="windGust">33</span><span> km/h</span></p>
+            </div>
+            <hr>
+            <div class="flex poppins-light subcategory-3">
+                <div class="flex" style="flex-direction: column;">
+                    <div>Wind Gust</div>
+                    <div style="font-size: 14px;">(in miles/h)</div>
+                </div>
+                <p class="condition"><span id="windGustM/H">33</span><span> m/h</span></p>
+            </div>
+            <hr>
+            <div class="flex poppins-light subcategory-3">
+                <div>Cloud</div>
+                <p class="condition" id="cloud">33</p>
+            </div>
+        </div> 
+
+        <!-- location details -->
+
+
+        <div class="location weather">
+            <div class="temperature-heading wind-heading ">
+                <p class="today-heading">
+                    Location
+                </p>
+            </div>
+            <div class="line"></div>
+            <div class="flex poppins-light-2 subcategory-2" style="margin-top: 8px;">
+                <div>Location</div>
+                <p class="condition" id="location">New delhi</p>
+            </div>
+            <hr>
+            <div class="flex poppins-light-2 subcategory-2">
+                <div>Region</div>
+                <p class="condition" id="region">Delhi</p>
+            </div>
+            <hr>
+            <div class="flex poppins-light-2 subcategory-2">
+                <div>Country</div>
+                <p class="condition" id="country">India</p>
+            </div>
+            <hr>
+            <div class="flex poppins-light-2 subcategory-2">
+                <div>Longitude</div>
+                <p class="condition" id="longitude">87</p>
+            </div>
+            <hr>
+            <div class="flex poppins-light-2 subcategory-2">
+                <div>Lattitude</div>
+                <p class="condition" id="lattitude">223</p>
+            </div>
+            <hr>
+            <div class="flex poppins-light-2 subcategory-2">
+                <div>Time Zone</div>
+                <p class="condition" id="timeZone">asia/kolkata</p>
+            </div>
+        </div>
+    </template>
+
+    <script src="https://kit.fontawesome.com/93ef95bfae.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
